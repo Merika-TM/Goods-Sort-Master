@@ -14,14 +14,4 @@ public class Cabinet : MonoBehaviour
         placeHolder.cellSize = new Vector2(cabinetSize.rect.width / 3,cabinetSize.rect.height);
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
