@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     [HideInInspector] public Transform parentAtferDrag;
     public Item item;
-    public Image Image;
+    public Image image;
 
     private void Start()
     {
@@ -19,8 +18,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void InitilizeItem(Item newItem)
     {
-        Image = gameObject.GetComponent<Image>();
-        Image.sprite = newItem.image;
+        image = gameObject.GetComponent<Image>();
+        image.sprite = newItem.image;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -28,7 +27,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         parentAtferDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
-        Image.raycastTarget = false;
+        image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -39,6 +38,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.SetParent(parentAtferDrag);
-        Image.raycastTarget = true;
+        image.raycastTarget = true;
+
+        Transform parent = gameObject.transform.parent;
+        parent.parent.GetComponent<Cabinet>().CheckedItems();
     }
 }
