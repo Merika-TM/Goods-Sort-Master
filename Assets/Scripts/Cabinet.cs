@@ -22,7 +22,7 @@ public class Cabinet : MonoBehaviour
         {
             if (HaveSameNames(grandchildrenNames))
             {
-                Debug.Log("Great You Could Sorting...");
+                DestroyItems(gameObject.transform);
             }
         }
     }
@@ -64,4 +64,16 @@ public class Cabinet : MonoBehaviour
         return true;
     }
 
+    private void DestroyItems(Transform parentTransform)
+    {
+        foreach (Transform child in parentTransform)
+        {
+            foreach (Transform grandchild in child)
+            {
+                Destroy(grandchild.gameObject);
+            }
+        }
+        
+        GameManager.Instance.CheckedGameState();
+    }
 }
