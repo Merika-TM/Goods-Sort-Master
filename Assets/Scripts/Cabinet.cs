@@ -70,7 +70,7 @@ public class Cabinet : MonoBehaviour
         {
             foreach (Transform grandchild in child)
             {
-                Destroy(grandchild.gameObject);
+                grandchild.GetComponent<FadeItem>().StartFade();
             }
         }
         
