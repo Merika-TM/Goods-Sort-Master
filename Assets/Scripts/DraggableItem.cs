@@ -1,28 +1,29 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
-
+public enum ItemType
+{
+    Food,
+    Animal,
+    Fruit,
+    Toy,
+    Drink,
+    Plant
+}
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public string itemName;
+    public ItemType itemType;
     [SerializeField] private bool isItemActive;
-
+    
+    [HideInInspector] public Image image;
     [HideInInspector] public Transform parentAtferDrag;
-    public Item item;
-    public Image image;
 
     private void Start()
     {
-        if (item != null)
-            InitilizeItem(item);
-        else
-            Debug.LogWarning(gameObject.name + " is not set !!");
+        image = gameObject.GetComponent<Image>();
     }
     
-    public void InitilizeItem(Item newItem)
-    {
-        image = gameObject.GetComponent<Image>();
-        image.sprite = newItem.image;
-    }
     public void SetActivate(bool isActive)
     {
         isItemActive = isActive;

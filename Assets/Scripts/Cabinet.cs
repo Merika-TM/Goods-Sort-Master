@@ -6,19 +6,12 @@ using UnityEngine.UI;
 public class Cabinet : MonoBehaviour
 {
     public List<CabinetSlot> slots;
-    public List<GameObject> itemGameObjects;
-    
-    private void Start()
-    {
-        int slotIndex = 0;
-    
-        foreach (var item in itemGameObjects)
-        {
-            slots[slotIndex].InstantiateItem(item);
-            slotIndex = (slotIndex + 1) % slots.Count;
-        }
-    }
 
+    public List<CabinetSlot> GetSlots()
+    {
+        return slots;
+    }
+    
     public void CheckedItems()
     {
         int grandchildrenCount = CountGrandchildren(transform, out List<string> grandchildrenNames);
