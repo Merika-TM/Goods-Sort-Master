@@ -1,17 +1,22 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Cabinet : MonoBehaviour
 {
-    private RectTransform cabinetSize;
-    private GridLayoutGroup placeHolder;
-
-    private void Awake()
+    public List<CabinetSlot> slots;
+    public List<GameObject> itemGameObjects;
+    
+    private void Start()
     {
-        cabinetSize = gameObject.GetComponent<RectTransform>();
-        placeHolder = gameObject.GetComponent<GridLayoutGroup>();
-        placeHolder.cellSize = new Vector2(cabinetSize.rect.width / 3,cabinetSize.rect.height);
+        int slotIndex = 0;
+    
+        foreach (var item in itemGameObjects)
+        {
+            slots[slotIndex].InstantiateItem(item);
+            slotIndex = (slotIndex + 1) % slots.Count;
+        }
     }
 
     public void CheckedItems()
