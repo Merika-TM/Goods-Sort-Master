@@ -9,11 +9,9 @@ public class Item : ScriptableObject
     public ItemType itemType;
     
     [Header("Only UI")]
-    public bool draggableItem = true;
     
     [Header("Both")]
     public Sprite image;
-    public Color color;
     
     public enum ItemType
     {

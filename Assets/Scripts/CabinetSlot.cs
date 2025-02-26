@@ -4,12 +4,6 @@ using UnityEngine;
 public class CabinetSlot : MonoBehaviour, IDropHandler
 {
 
-    public void InstantiateItem(GameObject item)
-    {
-        GameObject S = Instantiate(item, transform);
-        S.transform.localPosition = Vector3.zero;
-    }
-    
     public void OnDrop(PointerEventData eventData)
     {
         GameObject droppedItem = eventData.pointerDrag;
