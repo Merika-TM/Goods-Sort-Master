@@ -15,10 +15,23 @@ public class CabinetSlot : MonoBehaviour, IDropHandler
             draggableItem.transform.SetParent(transform);
             draggableItem.transform.localPosition = Vector3.zero;
         }
-        else
+        else 
         {
-            draggableItem.transform.SetParent(draggableItem.parentAtferDrag);
-            draggableItem.transform.localPosition = Vector3.zero;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<DraggableItem>().GetActivate())
+                {
+                    draggableItem.transform.SetParent(draggableItem.parentAtferDrag);
+                    draggableItem.transform.localPosition = Vector3.zero;                    
+                }
+                else
+                {
+                    draggableItem.parentAtferDrag = transform;
+                    draggableItem.transform.SetParent(transform);
+                    draggableItem.transform.localPosition = Vector3.zero;
+                }
+   
+            }
         }
     }
 }
