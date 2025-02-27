@@ -487,10 +487,6 @@ MonoBehaviour:
   - {fileID: 6350714794905192490, guid: eb4fe325cde9389499dcd83a04c33107, type: 3}
   - {fileID: 3689348216959402068, guid: 5283629b921f7664ab5bd2d88ecbe90f, type: 3}
   - {fileID: 786121391144101130, guid: 19d657d8eeb109943ac425097e539ba7, type: 3}
-  - {fileID: 1537538351783158056, guid: 8a1af7be0b90e4d48ae41a16884f4fec, type: 3}
-  - {fileID: 6895500135686088189, guid: 937692201f7feec4d82a7e56a8d48aca, type: 3}
-  - {fileID: 1537538351783158056, guid: 8a1af7be0b90e4d48ae41a16884f4fec, type: 3}
-  - {fileID: 1537538351783158056, guid: 8a1af7be0b90e4d48ae41a16884f4fec, type: 3}
   cabnets:
   - {fileID: 7160566470579086715}
   - {fileID: 1088317565}
