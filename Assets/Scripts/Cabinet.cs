@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,69 +8,49 @@ public class Cabinet : MonoBehaviour
 {
     public List<CabinetSlot> slots;
 
+    private void Start()
+    {
+        Debug.Log("This Cabinet Has " + gameObject.transform.childCount);
+    }
+
     public List<CabinetSlot> GetSlots()
     {
         return slots;
     }
-    
-    public void CheckedItems()
-    {
-        int grandchildrenCount = CountGrandchildren(transform, out List<string> grandchildrenNames);
 
-        if (grandchildrenCount == 3)
+    public void CheckedLastItem()
+    {
+        List<string> childsNames = new List<string>(); 
+        List<bool> childsActivity = new List<bool>();
+
+        foreach (var slot in slots)
         {
-            if (HaveSameNames(grandchildrenNames))
+            if (slot.transform.childCount == 0) return;
+            else
             {
-                DestroyItems(gameObject.transform);
+                var childIndex = slot.gameObject.transform.childCount - 1;
+                var child = slot.gameObject.transform.GetChild(childIndex);
+                childsNames.Add(child.gameObject.GetComponent<DraggableItem>().itemName);
+                childsActivity.Add(child.gameObject.GetComponent<DraggableItem>().GetActivate());
             }
         }
-    }
 
-    private int CountGrandchildren(Transform parent, out List<string> grandchildrenNames)
-    {
-        int count = 0;
-        grandchildrenNames = new List<string>();
+        bool allNamesEqual = new HashSet<string>(childsNames).Count == 1;
+        bool allActivityEqual = new HashSet<bool>(childsActivity).Count == 1;
         
-        foreach (Transform child in parent)
+        if (allNamesEqual && allActivityEqual)
         {
-            foreach (Transform grandchild in child)
-            {
-                count++;
-                grandchildrenNames.Add(grandchild.name);
-            }
+            DestroyLastItems();
         }
-        
-        return count;
     }
     
-    bool HaveSameNames(List<string> names)
+    private void DestroyLastItems()
     {
-        if (names.Count == 0)
+        foreach (var slot in slots)
         {
-            return false;
-        }
-        
-        string firstName = names[0];
-
-        foreach (string name in names)
-        {
-            if (name != firstName)
-            {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    private void DestroyItems(Transform parentTransform)
-    {
-        foreach (Transform child in parentTransform)
-        {
-            foreach (Transform grandchild in child)
-            {
-                grandchild.GetComponent<FadeItem>().StartFade();
-            }
+            var childIndex = slot.gameObject.transform.childCount - 1;
+            var child= slot.gameObject.transform.GetChild(childIndex);
+            child.GetComponent<FadeItem>().StartFade();
         }
         
         GameManager.Instance.CheckedGameState();
