@@ -77,7 +77,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         parentAtferDrag = transform.parent;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
-        transform.localScale = Vector3.one * 1.1f;
         image.raycastTarget = false;
     }
 
@@ -88,11 +87,29 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(parentAtferDrag);
-        transform.localScale = Vector3.one;
-        image.raycastTarget = true;
+        GameObject dropTarget = eventData.pointerEnter;
+        
+        if (dropTarget == null || !dropTarget.TryGetComponent<CabinetSlot>(out var cabinetSlot))
+        {
+            ResetPosition();
+            return;
+        }
 
-        Transform parent = gameObject.transform.parent;
-        parent.parent.GetComponent<Cabinet>().CheckedItems();
+        if (!cabinetSlot.CanAcceptItem(this))
+        {
+            ResetPosition();
+            return;
+        }
+
+        transform.SetParent(cabinetSlot.transform);
+        transform.localPosition = new Vector3(0,-35,0);
+        parentAtferDrag = cabinetSlot.transform;
+    }
+
+    private void ResetPosition()
+    {
+        transform.SetParent(parentAtferDrag);
+        transform.localPosition = new Vector3(0,-35,0);
+        image.raycastTarget = true;
     }
 }
