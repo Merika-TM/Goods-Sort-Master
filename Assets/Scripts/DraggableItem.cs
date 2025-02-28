@@ -31,7 +31,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image = gameObject.GetComponent<Image>();
         baseColor = image.color;
-        isItemActive = Random.Range(0, 2) == 0; // Random activate
+        isItemActive = Random.Range(0f, 1f) < 0.7f;
 
         ItemActivityStatus(isItemActive);
     }

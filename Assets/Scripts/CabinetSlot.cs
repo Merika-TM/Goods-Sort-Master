@@ -19,7 +19,7 @@ public class CabinetSlot : MonoBehaviour, IDropHandler
             gameObject.GetComponentInParent<Cabinet>().CheckedLastItem();
         }
     }
-
+    
     public bool CanAcceptItem(DraggableItem newItem)
     {
         int lastChildIndex = transform.childCount - 1;
