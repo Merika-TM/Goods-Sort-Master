@@ -1,6 +1,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
+
 public enum ItemType
 {
     Food,
@@ -10,20 +11,31 @@ public enum ItemType
     Drink,
     Plant
 }
+
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public string itemName;
     public ItemType itemType;
     [SerializeField] private bool isItemActive;
-    
+
+    private Color baseColor;
     [HideInInspector] public Image image;
     [HideInInspector] public Transform parentAtferDrag;
 
     private void Start()
     {
-        image = gameObject.GetComponent<Image>();
+        InitilizeItem();
     }
-    
+
+    private void InitilizeItem()
+    {
+        image = gameObject.GetComponent<Image>();
+        baseColor = image.color;
+        isItemActive = Random.Range(0, 2) == 0; // Random activate
+
+        ItemActivityStatus(isItemActive);
+    }
+
     public void SetActivate(bool isActive)
     {
         isItemActive = isActive;
@@ -34,15 +46,29 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         return isItemActive;
     }
+
     private void ItemActivityStatus(bool state)
     {
         if (state)
         {
-            //todo: active settings (scale, location, color brightness)
+            image.raycastTarget = true;
+            transform.localPosition = new Vector3(0,-35,0);
+            image.color = baseColor;
         }
         else
         {
-            //todo: DeActive settings (scale, location, color brightness)
+            image.raycastTarget = false;
+            transform.localPosition = new Vector3(0,0,0);
+
+            #region Changing Color
+
+            Color color = image.color;
+            float h, s, v;
+            Color.RGBToHSV(color, out h, out s, out v);
+            v *= 0.15f;
+            image.color = Color.HSVToRGB(h, s, v);
+
+            #endregion
         }
     }
 

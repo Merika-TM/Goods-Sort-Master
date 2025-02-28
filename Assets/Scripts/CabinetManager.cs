@@ -10,9 +10,9 @@ public class CabinetManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < cabnets.Count; i++)
+        foreach (var obj in cabnets)
         {
-            cabinetSlots.AddRange(cabnets[i].GetComponent<Cabinet>().GetSlots());
+            cabinetSlots.AddRange(obj.GetComponent<Cabinet>().GetSlots());
         }
 
         int slotIndex = 0;
